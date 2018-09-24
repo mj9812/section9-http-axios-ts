@@ -1,0 +1,26 @@
+.Post {
+    width: 200px;
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #eee;
+    box-shadow: 0 2px 3px #ccc;
+    margin: 20px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.Post h1 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.Post:hover,
+.Post:active {
+    background-color: #C0DDF5;
+}
+
+.Author {
+    margin: 7px 0;
+    color: #999;
+}
