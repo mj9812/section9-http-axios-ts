@@ -1,11 +1,11 @@
 import * as React from 'react';
-import * as MyObjs from '../classes/MyObjects';
+import PostData from '../classes/MyObjects';
 import './Post.css';
 
 interface IProps
 {
-    post: MyObjs.PostData;
-    clicked: (pid: string) => void;
+    post: PostData;
+    clicked: (pid: number, callBack: () => void) => void;
 }
 
 export default class Post extends React.Component<IProps>
@@ -19,8 +19,15 @@ export default class Post extends React.Component<IProps>
             </article>
         );
     }
-    private onClicke = () =>
+    private onClicke = (event: any) =>
     {
-        this.props.clicked(this.props.post.pid);
+        const comp = event.target;
+        this.setStyle(comp, 'cursor', 'wait');
+        this.props.clicked(this.props.post.pid, 
+            this.setStyle.bind(this, comp,  'cursor', 'pointer'));
+    }
+    private setStyle(comp: any, stKey: string, styl: string)
+    {
+        comp.style[stKey] = styl;
     }
 }

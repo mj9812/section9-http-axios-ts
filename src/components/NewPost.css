@@ -1,32 +1,43 @@
 .NewPost {
     width: 80%;
-    margin: 20px auto;
+    margin: 10px auto;
     border: 1px solid #eee;
     box-shadow: 0 2px 3px #ccc;
     text-align: center;
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    vertical-align: text-bottom;
+}
+
+.NewPost h1 {
+    grid-column: 1 / 5;
 }
 
 .NewPost label {
-    display: block;
-    margin: 10px auto;
-    text-align: center;
+    grid-column: 1 / 2;
+    margin-left: 50px;
+    text-align: left;
     font-weight: bold;
+    width: 80px;
 }
 
 .NewPost input,
 .NewPost textarea,
 .NewPost select {
-    display: block;
-    width: 80%;
+    grid-column: 2 / 5;
+    width: 90%;
     box-sizing: border-box;
-    border: 1px solid black;
-    outline: none;
     font: inherit;
-    margin: auto;
+    margin-right: 20px;
 }
 
 .NewPost button {
-    margin: 5px 0;
+    grid-column: 2 / 4;
+    width: 200px;
+    margin-left: 60px;
+    margin-top: 10px;
+    margin-bottom: 15px;
     padding: 10px;
     font: inherit;
     border: 1px solid #fa923f;

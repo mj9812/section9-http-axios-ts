@@ -1,31 +1,28 @@
-import axios from 'axios';
 import * as React from 'react';
-import * as MyObjs from '../classes/MyObjects';
+import Helper from '../classes/Helper';
+import PostData from '../classes/MyObjects';
 import './NewPost.css';
 
 interface IProps
 {
-    newPid: number;
-    handler: (nPost: MyObjs.PostData) => void;
+    np: PostData;
+    addPostList: (nPost: PostData) => void;
 }
 
 export default class NewPost extends React.Component<IProps>
 {
-    private nwPost: MyObjs.PostData;
+    private nwPost: PostData;
 
     public constructor(props: IProps)
     {
         super(props);
-        this.nwPost = new MyObjs.PostData(this.props.newPid+'', '', '', '');
+        this.nwPost = this.props.np;
     }
 
     public render()
     {
-        if(this.nwPost.pid !== (this.props.newPid+'')) {
-            this.nwPost.pid = this.props.newPid+'';
-        }
         return (
-            <div className="NewPost">
+            <div className="NewPost" id="NewPostDiv">
             <h1>Add a Post</h1>
                 <label>Title</label>
                 <input type="text" value={this.nwPost.title} onChange={ this.setTitle } />
@@ -59,26 +56,22 @@ export default class NewPost extends React.Component<IProps>
         this.setState({});
     }
 
-    private postDataHandler = () =>
+    private postDataHandler = (event: any) =>
     {
+        const comp = event.target;
         if(this.nwPost.title && this.nwPost.content && this.nwPost.author)
         {
-            const addedPost = new MyObjs.PostData(this.nwPost.pid, 
-                this.nwPost.title, this.nwPost.content, this.nwPost.author);
-            axios.post('https://jsonplaceholder.typicode.com/posts', addedPost)
-            .then(response => {
-                if(response.status === 201)
-                {
-                    this.props.handler(addedPost);
-                    this.nwPost.title = '';
-                    this.nwPost.content = '';
-                    this.nwPost.author = '';
-                    this.setState({});
-                }
-            });
+            this.setStyle(comp, 'cursor', 'wait');
+            Helper.postToServer(PostData.newPostObj(this.nwPost),
+            this.props.addPostList, this.setStyle.bind(this, comp, 'cursor', 'pointer'));
         }
         else {
             alert('Please fill values in the TextBox(s) to Add a Post.');
         }
+    }
+
+    private setStyle(comp: any, stKey: string, styl: string)
+    {
+        comp.style[stKey] = styl;
     }
 }

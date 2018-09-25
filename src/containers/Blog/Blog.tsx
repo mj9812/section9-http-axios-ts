@@ -1,5 +1,6 @@
 import * as React from 'react';
-import * as MyObjs from '../../classes/MyObjects';
+import Helper from '../../classes/Helper';
+import PostData from '../../classes/MyObjects';
 import FullPost from '../../components/FullPost';
 import NewPost from '../../components/NewPost';
 import PostList from '../../components/PostList';
@@ -7,12 +8,14 @@ import './Blog.css';
 
 export default class Blog extends React.Component
 {
-    private dummyPosts: MyObjs.PostData[] = [];
-    private selectedPost: MyObjs.PostData = new MyObjs.PostData(
-        '0', 'Please select a post!', 'Click on a post from above list.', 'n/a');
+    private dummyPosts: PostData[] = [];
+    private nwPost: PostData = new PostData(0, '', '', '' );
+    private selectedPost: PostData = new PostData(0, 
+        'Please select a post!', 'Click on a post from above list.', 'n/a');
 
     public render()
     {
+        this.nwPost.pid = this.dummyPosts.length + 1;
         return (
         <div>
             <section className='Posts'>
@@ -22,7 +25,7 @@ export default class Blog extends React.Component
                 <FullPost selectedPost={ this.selectedPost } />
             </section>
             <section>
-                <NewPost newPid={(this.dummyPosts.length+1)} handler={ this.newPostAdded } />
+                <NewPost np={this.nwPost} addPostList={ this.newPostAdded } />
             </section>
         </div> );
     }
@@ -32,17 +35,17 @@ export default class Blog extends React.Component
         this.assignDummyData();
     }
 
-    public postClicked = (postId: string) =>
+    public postClicked = (postId: number, callBack: () => void) =>
     {
         this.selectedPost.title = 'Loading...';
         this.selectedPost.content = 'Please Wait While Loading Content..';
         this.setState({});
-        MyObjs.PostData.getDataFromServer(postId, this.myReturnFunc);
+        Helper.getPostDetails(postId, this.myReturnFunc, callBack);
     }
 
     public myReturnFunc = (retrievedPost: any) =>
     {
-        if( Array.isArray(retrievedPost))  {
+        if(Array.isArray(retrievedPost))  {
             this.dummyPosts = retrievedPost;
         } else {
             this.selectedPost = retrievedPost;
@@ -50,14 +53,17 @@ export default class Blog extends React.Component
         this.setState({});
     }
 
-    public newPostAdded = (nPost: MyObjs.PostData) =>
+    public newPostAdded = (nP: PostData) =>
     {
-        this.dummyPosts.push(nPost);
+        this.dummyPosts.push(nP);
+        this.nwPost.title = '';
+        this.nwPost.content = '';
+        this.nwPost.author = '';
         this.setState({});
     }
 
     private assignDummyData()
     {
-        MyObjs.PostData.getDataFromServer('', this.myReturnFunc);
+        Helper.getAllPostsFromServer(this.myReturnFunc);
     }
 }

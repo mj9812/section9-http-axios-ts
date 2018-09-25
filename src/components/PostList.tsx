@@ -1,18 +1,18 @@
 import * as React from 'react';
-import * as MyObjs from '../classes/MyObjects';
+import PostData from '../classes/MyObjects';
 import Post from './Post';
 
 interface IProps
 {
-    posts: MyObjs.PostData[];
-    clicked: (pid: string) => void;
+    posts: PostData[];
+    clicked: (pid: number, callBack: () => void) => void;
 }
 
 const postList: React.SFC<IProps> = (props) =>
 {
     return (
         <React.Fragment> {
-            props.posts.map((post: MyObjs.PostData) => { // Array of Post Stateless Component
+            props.posts.map((post: PostData) => { // Array of Post Component
                 return <Post key={post.pid} clicked={props.clicked} post={post} />; })
         } </React.Fragment>
     );

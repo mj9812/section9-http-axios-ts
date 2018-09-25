@@ -1,10 +1,10 @@
 import * as React from 'react';
-import * as MyObjs from '../classes/MyObjects';
+import PostData from '../classes/MyObjects';
 import './FullPost.css';
 
 interface IProps
 {
-    selectedPost: MyObjs.PostData;
+    selectedPost: PostData;
 }
 
 const fullPost: React.SFC<IProps> = (props) => {
