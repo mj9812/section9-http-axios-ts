@@ -58,9 +58,9 @@ export default class NewPost extends React.Component<IProps>
 
     private postDataHandler = (event: any) =>
     {
-        const comp = event.target;
         if(this.nwPost.title && this.nwPost.content && this.nwPost.author)
         {
+            const comp = event.target;
             this.setStyle(comp, 'cursor', 'wait');
             Helper.postToServer(PostData.newPostObj(this.nwPost),
             this.props.addPostList, this.setStyle.bind(this, comp, 'cursor', 'pointer'));
