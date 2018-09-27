@@ -5,6 +5,7 @@ import './FullPost.css';
 interface IProps
 {
     selectedPost: PostData;
+    handler: (event: any) => void;
 }
 
 const fullPost: React.SFC<IProps> = (props) => {
@@ -13,7 +14,7 @@ const fullPost: React.SFC<IProps> = (props) => {
             <h2> {props.selectedPost.title} </h2>
             <p> {props.selectedPost.content} </p>
             <div className="Edit">
-                <button className="Delete">Delete</button>
+                <button className="Delete" onClick={props.handler} >Delete</button>
             </div>
         </div>
     );

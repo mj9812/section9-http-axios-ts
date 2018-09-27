@@ -5,7 +5,8 @@ import './Post.css';
 interface IProps
 {
     post: PostData;
-    clicked: (pid: number, callBack: () => void) => void;
+    indx: number;
+    clicked: (pid: number, indx: number, callBack: () => void) => void;
 }
 
 export default class Post extends React.Component<IProps>
@@ -23,7 +24,7 @@ export default class Post extends React.Component<IProps>
     {
         const comp = event.target;
         this.setStyle(comp, 'cursor', 'wait');
-        this.props.clicked(this.props.post.pid, 
+        this.props.clicked(this.props.post.pid, this.props.indx,
             this.setStyle.bind(this, comp,  'cursor', 'pointer'));
     }
     private setStyle(comp: any, stKey: string, styl: string)
