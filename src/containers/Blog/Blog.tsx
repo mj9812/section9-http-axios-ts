@@ -66,7 +66,6 @@ export default class Blog extends React.Component
             comp.style.cursor = 'wait';
             Helper.deletePost(this.selectedPost.pid, () => 
             {
-                
                 this.dummyPosts.splice(this.selectedIndex, 1);
                 this.selectedPost = new PostData(0, 'Please select a post!',
                     'Click on a post from above list.', 'n/a');
